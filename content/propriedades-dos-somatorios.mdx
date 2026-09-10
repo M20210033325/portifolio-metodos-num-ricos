@@ -1,0 +1,174 @@
+---
+title: "Propriedades dos Somatórios"
+subtitle: "As seis propriedades que permitem manipular somatórios sem escrever termo por termo"
+method: "somatórios"
+status: "completo"
+date: "2026-09-10"
+order: 1
+summary: "Regras pra separar, fatorar e simplificar somatórios — base pra tudo que vem depois na disciplina."
+---
+
+O somatório é expresso pela letra grega sigma (**Σ**), com o limite inferior
+indicado abaixo do símbolo e o limite superior indicado acima. O termo à
+direita do símbolo é a expressão que está sendo somada.
+
+Basicamente, soma-se todos os termos começando pelo valor do limite inferior
+até o limite superior.
+
+## Forma geral
+
+```
+  n
+  Σ  xi  =  x1 + x2 + x3 + ... + xn
+ i=1
+```
+
+## Exemplo 1
+
+```
+  5
+  Σ  2·i  =  2·1 + 2·2 + 2·3 + 2·4 + 2·5  =  2 + 4 + 6 + 8 + 10  =  30
+ i=1
+```
+
+## Exemplo 2
+
+```
+  3
+  Σ  i²·(i+1)  =  0²·(0+1) + 1²·(1+1) + 2²·(2+1) + 3²·(3+1)
+ i=0
+             =  0 + 2 + 12 + 36  =  50
+```
+
+## 1ª propriedade — constante no somatório
+
+Quando o termo somado é uma constante (não depende de `i`), o somatório dela
+é a constante multiplicada pela quantidade de termos.
+
+<Note label="atenção">
+  Se o limite inferior for 1, a quantidade de termos é simplesmente n. Se for
+  diferente de 1, use K · (n − i + 1) para contar quantos termos existem de
+  fato.
+</Note>
+
+```
+  n
+  Σ  K  =  K · (n − i + 1)
+ i=1
+```
+
+Exemplo com limite inferior 1:
+
+```
+  4
+  Σ  0,5  =  0,5+0,5+0,5+0,5  =  2   (4 × 0,5)
+ i=1
+```
+
+Exemplo com limite inferior diferente de 1 — repare que **não** é
+simplesmente 6 × 0,5:
+
+```
+  6
+  Σ  0,5  =  0,5+0,5+0,5+0,5  =  2   ≠   6 · 0,5
+ i=3
+```
+
+## 2ª propriedade — somatório de uma soma
+
+Se a expressão somada é uma soma de dois termos, o somatório pode ser
+separado em dois somatórios independentes.
+
+```
+  m                  m         m
+  Σ  (Xi + Yi)  =    Σ  Xi  +  Σ  Yi
+ i=1                i=1       i=1
+```
+
+Prova direta, expandindo os termos:
+
+```
+  m
+  Σ  (Xi + Yi)  =  (X1+Y1) + (X2+Y2) + ... + (Xm+Ym)
+ i=1
+              =  (X1+X2+...+Xm) + (Y1+Y2+...+Ym)
+```
+
+## 3ª propriedade — constante multiplicando
+
+Se uma constante multiplica todos os termos do somatório, ela pode sair do
+somatório e multiplicar o resultado no final.
+
+```
+  m            m
+  Σ  K·Xi  =  K · Σ  Xi
+ i=1          i=1
+```
+
+```
+  = K·X1 + K·X2 + K·X3 + ...
+  = K·(X1 + X2 + X3 + ...)
+```
+
+## 4ª propriedade — quebra de intervalo
+
+Somar de 1 até p, e depois somar de p+1 até n do mesmo termo, dá o mesmo
+resultado que somar direto de 1 até n.
+
+```
+  p         m              m
+  Σ  Xi  +  Σ  Xi     =    Σ  Xi
+ i=1       i=p+1          i=1
+```
+
+```
+= (X1+X2+...+Xp) + (Xp+1+Xp+2+...+Xm)
+```
+
+## 5ª propriedade — soma telescópica
+
+Quando os termos vão se cancelando — o termo negativo de um cancela com o
+termo positivo do próximo — sobra só o primeiro e o último termo da
+sequência.
+
+```
+  n
+  Σ  (Xi − Xi-1)  =  Xn − Xk-1
+ i=k
+```
+
+Exemplo:
+
+```
+  4
+  Σ  (Xi − Xi-1)  =  (X3−X2) + (X4−X3)  =  X4 − X2
+ i=3
+```
+
+## 6ª propriedade — somatório duplo separável
+
+Se o termo do somatório duplo é um produto de uma parte que só depende de
+`i` com uma parte que só depende de `j`, o somatório duplo se separa em dois
+somatórios simples multiplicados entre si.
+
+```
+  m    n                m          n
+  Σ    Σ  Xi·Yj   =     Σ  Xi   ·  Σ  Yj
+ i=1  j=1              i=1        j=1
+```
+
+Exemplo:
+
+```
+  2    2                2         2
+  Σ    Σ  i·j    =      Σ  i   ·  Σ  j    =  (1+2)·(1+2)  =  9
+ i=1  j=1              i=1       j=1
+```
+
+## Por que isso importa pra métodos numéricos
+
+Essas propriedades voltam o tempo todo mais pra frente na disciplina — em
+séries de Taylor, em regressão por mínimos quadrados (que é literalmente uma
+minimização de um somatório de erros ao quadrado), e em qualquer dedução que
+envolva manipular um somatório antes de programar. Vale ter essa página como
+referência rápida.

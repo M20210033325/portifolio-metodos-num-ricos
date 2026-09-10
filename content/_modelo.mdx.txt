@@ -1,0 +1,37 @@
+---
+title: "Nome do Método"
+subtitle: "Uma frase curta explicando o que o método resolve"
+method: "nome-curto-do-metodo"
+status: "em-andamento"
+date: "AAAA-MM-DD"
+summary: "Resumo de 1-2 frases que aparece na lista da página inicial."
+---
+
+Texto normal em markdown vai aqui. Pode usar **negrito**, *itálico*,
+listas, blocos de código com ```, e citações com >.
+
+## Use ## para subtítulos de seção
+
+<Note label="definição">
+  Use esse componente pra destacar uma definição ou observação importante.
+</Note>
+
+<Note label="cuidado" type="error">
+  Use type="error" pra destacar um erro comum ou uma armadilha do método.
+</Note>
+
+<Readout iteration="4" error="1.2e-4" status="ok" />
+
+<!--
+  Se quiser um widget interativo pro seu método (Newton, Gauss-Seidel,
+  Simpson, Euler...), crie um novo componente em /components seguindo o
+  modelo de ConvergencePlot.jsx, registre-o em
+  app/posts/[slug]/page.js (dentro de mdxComponents) e use a tag aqui,
+  ex: <NewtonPlot />
+-->
+
+## Quando usar
+
+- ponto forte 1
+- ponto forte 2
+- limitação principal
