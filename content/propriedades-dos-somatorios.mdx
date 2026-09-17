@@ -200,6 +200,91 @@ as somas por linha.
  j=1
 ```
 
+## Exemplos práticos
+
+Pra fixar as propriedades, considere as sequências abaixo, todas com 6
+termos:
+
+```
+x = (x1, x2, x3, x4, x5, x6) = (3, -1, 4, 2, 5, 6)
+y = (y1, y2, y3, y4, y5, y6) = (1, 6, -2, 4, 3, 5)
+```
+
+E, pro exemplo de índice livre, a matriz:
+
+```
+      | 2  -1   3   0 |
+M  =  | 1   4   0   2 |
+      | -3  2   1   5 |
+```
+
+**Soma e diferença** — separando `Σ(xi+yi)` em dois somatórios:
+
+```
+  4
+  Σ  (xi + yi)  =  (x1+x2+x3+x4) + (y1+y2+y3+y4)
+ i=1
+              =  (3-1+4+2) + (1+6-2+4)  =  8 + 9  =  17
+```
+
+Confere direto, somando termo a termo: (3+1)+(-1+6)+(4-2)+(2+4) = 4+5+2+6 = 17.
+
+**Constante multiplicando** — tirando o 4 do somatório:
+
+```
+  4                4
+  Σ  4·xi   =  4 · Σ  xi   =  4 · (3-1+4+2)  =  4 · 8  =  32
+ i=1              i=1
+```
+
+**Decomposição do intervalo** — quebrando a soma de 1 a 6 em duas partes:
+
+```
+  6         3         6
+  Σ  xi  =  Σ  xi  +  Σ  xi  =  (3-1+4) + (2+5+6)  =  6 + 13  =  19
+ i=1       i=1       i=4
+```
+
+Confere com a soma direta de todos os 6 termos: 3-1+4+2+5+6 = 19.
+
+**Limite único** — quando o intervalo é um único índice:
+
+```
+  5
+  Σ  yi  =  y5  =  3
+ i=5
+```
+
+**Translação de índice** — deslocando os limites em 2 e compensando no
+índice:
+
+```
+  4              6
+  Σ  xi    =     Σ    xi-2   =  x1+x2+x3+x4  =  3-1+4+2  =  8
+ i=1            i=3
+```
+
+Os dois lados somam exatamente os mesmos quatro termos (x1 a x4) — só muda
+a "numeração" usada pra contar até eles.
+
+**Índice livre** — somando cada linha da matriz M separadamente (o índice
+`i` da linha fica livre, só `j` é somado):
+
+```
+  4
+  Σ  Mij  ,  para todo i = 1, 2, 3
+ j=1
+```
+
+```
+linha i=1:  2 + (-1) + 3 + 0   =  4
+linha i=2:  1 + 4 + 0 + 2      =  7
+linha i=3:  -3 + 2 + 1 + 5     =  5
+```
+
+Cada linha vira um resultado próprio — não dá pra colapsar num número só,
+porque o valor depende de qual linha (`i`) você escolhe.
+
 ## Por que isso importa pra métodos numéricos
 
 Essas propriedades voltam o tempo todo mais pra frente na disciplina — em
