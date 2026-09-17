@@ -165,6 +165,41 @@ Exemplo:
  i=1  j=1              i=1       j=1
 ```
 
+## 7ª propriedade — limite único
+
+Caso os limites inferior e superior sejam iguais, o resultado do somatório é
+simplesmente esse número — não tem soma acontecendo, é um termo sozinho.
+
+```
+  m
+  Σ  xi  =  xm
+ i=m
+```
+
+## 8ª propriedade — translação de índice
+
+Se somar `p` nos dois limites (inferior e superior), precisa compensar
+subtraindo `p` do índice dentro do termo, pra continuar somando os mesmos
+valores.
+
+```
+  n            n+p
+  Σ  xi   =    Σ    xi-p
+ i=m          i=m+p
+```
+
+## 9ª propriedade — índice livre
+
+Isso acontece quando, num somatório duplo, um dos índices fica livre —
+valendo pra qualquer valor de 1 até m, sem ser somado. Nesse caso, separamos
+as somas por linha.
+
+```
+  n
+  Σ  xij  ,  para todo i = 1, ..., m
+ j=1
+```
+
 ## Por que isso importa pra métodos numéricos
 
 Essas propriedades voltam o tempo todo mais pra frente na disciplina — em
