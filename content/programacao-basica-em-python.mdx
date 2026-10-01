@@ -1,0 +1,124 @@
+---
+title: "Programação Básica em Python"
+subtitle: "Do fluxograma ao pseudocódigo até o código — os três formatos usados em sala pra descrever um algoritmo"
+method: "python"
+status: "completo"
+date: "2026-10-01"
+order: 2
+summary: "Fluxograma, pseudocódigo e código da fórmula da média, mais a primeira atividade: soma dos quadrados dos primeiros n números naturais."
+---
+
+Falando um pouco sobre a programação básica em Python, aprendemos em sala
+de aula os modelos de se criar um código para ajudar o aluno a resolver
+fórmulas matemáticas. Dentro desses formatos pode-se citar o fluxograma, o
+pseudocódigo e o código propriamente dito.
+
+## Exemplo da média
+
+Primeiro, utilizei o exemplo do professor das médias e criei um fluxograma
+onde apresenta visualmente a lógica do algoritmo, antes de ir para o
+pseudocódigo.
+
+![Fluxograma da média aritmética](/images/programacao-basica-em-python/image1.png)
+
+Depois criei também o pseudocódigo da fórmula da média para descrever a
+lógica do algoritmo próximo da linguagem humana, sem ficar preso à sintaxe.
+
+```
+algoritmo "Media_Aritmetica"
+var
+  n, i: inteiro
+  valor, soma, media: real
+inicio
+  escreva("Quantos valores deseja informar? ")
+  leia(n)
+  soma <- 0
+  i <- 1
+  enquanto (i <= n) faca
+    escreva("Digite o valor ", i, ": ")
+    leia(valor)
+    soma <- soma + valor
+    i <- i + 1
+  fimenquanto
+  media <- soma / n
+  escreval("A média é: ", media:6:2)
+fimalgoritmo
+```
+
+E por fim temos o código que foi apresentado pelo professor. Ele utilizou
+o Google Colab, que seria um conjunto de computadores do Google que
+servem para hospedar os programas.
+
+![Código da média no Google Colab](/images/programacao-basica-em-python/image2.png)
+
+## Primeira atividade
+
+Foi pedido para se criar uma fórmula matemática em Python e rodar ela no
+Google Colab. A fórmula que escolhi foi a soma dos quadrados dos primeiros
+n números naturais.
+
+![Código da soma dos quadrados no Google Colab](/images/programacao-basica-em-python/image3.png)
+
+Eu escrevi ela no espaço de texto utilizando:
+
+```
+Σ (i=1 até n) i²  =  n(n+1)(2n+1) / 6
+```
+
+E a explicação do código seria a seguinte:
+
+<Note label="def soma_quadrados(n):">
+  Cria uma função. A palavra <code>def</code> (de "define") avisa ao Python
+  que ali começa a definição de uma função; <code>soma_quadrados</code> é o
+  nome escolhido para ela; <code>n</code> entre parênteses é o parâmetro, o
+  valor que a função recebe de fora para trabalhar; os dois-pontos indicam
+  que o bloco da função começa na linha seguinte.
+</Note>
+
+<Note label='"""Calcula somatório i² de i=1 até n, termo a termo (loop)."""'>
+  É um texto (docstring) que descreve o que a função faz.
+</Note>
+
+<Note label="soma = 0">
+  Cria a variável <code>soma</code> e atribui a ela o valor zero. Ela é o
+  acumulador — a variável que vai guardando o total parcial a cada
+  repetição. Precisa começar em zero porque zero é o elemento neutro da
+  adição, então não interfere no resultado.
+</Note>
+
+<Note label="for i in range(1, n + 1):">
+  É o laço de repetição. <code>range(1, n + 1)</code> cria uma sequência de
+  inteiros começando em 1 e parando antes de n + 1, ou seja, de 1 até n
+  inclusive — o +1 é necessário porque o range nunca inclui o valor final.
+  A cada volta do laço, <code>i</code> assume o próximo número da
+  sequência.
+</Note>
+
+<Note label="soma += i ** 2">
+  É o coração da fórmula, por isso fica dentro do laço (recuo maior). O
+  operador <code>**</code> é a potenciação em Python, então{" "}
+  <code>i ** 2</code> é i ao quadrado. O operador <code>+=</code> é uma
+  forma abreviada de <code>soma = soma + i ** 2</code>: pega o valor atual
+  de soma, adiciona o quadrado de i, e guarda o resultado de volta em soma.
+</Note>
+
+<Note label="return soma">
+  Fica fora do laço (mesmo recuo do <code>for</code>), então só é executado
+  quando o laço termina. Devolve o valor final de soma para quem chamou a
+  função e encerra a função.
+</Note>
+
+<Note label="n = 3 / print(...)">
+  <code>n</code> é criado fora da função, com valor 3 — diferente do{" "}
+  <code>n</code> que é parâmetro da função, eles só têm o mesmo nome.{" "}
+  <code>print("Somatório (loop):", soma_quadrados(n))</code> primeiro
+  executa a função com n = 3, recebe o valor do <code>return</code>, e
+  depois mostra o texto seguido desse valor.
+</Note>
+
+Acompanhando a execução com n = 3, o `range(1, 4)` gera os números 1, 2 e
+3. Na primeira volta, i = 1 e a soma passa de 0 para 0 + 1 = 1. Na segunda,
+i = 2 e a soma vai para 1 + 4 = 5. Na terceira, i = 3 e a soma vai para 5 +
+9 = 14. O laço acaba, a função devolve 14 e a tela mostra `Somatório
+(loop): 14`. Dá pra conferir com a fórmula fechada: 3 × 4 × 7 / 6 = 84 / 6
+= 14.

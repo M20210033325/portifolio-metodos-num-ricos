@@ -1,0 +1,223 @@
+---
+title: "Problema do Paraquedista (Excel + Python)"
+subtitle: "Solução analítica vs. Método de Euler — o clássico exemplo de por que métodos numéricos existem"
+method: "método de Euler"
+status: "completo"
+date: "2026-10-01"
+order: 3
+summary: "Queda livre com resistência do ar: comparação entre a fórmula exata e a aproximação numérica, implementada em planilha e em Python."
+---
+
+Esse é um dos melhores problemas pra disciplina de métodos numéricos, pois
+mostra como seria resolver um problema de maneira exata ou de maneira
+aproximada, e o porquê da segunda forma ser necessária em alguns momentos.
+
+O problema: um paraquedista de massa m = 68,1 kg salta de um balão de ar
+quente parado (sem velocidade inicial) e cai em queda livre, antes de abrir
+o paraquedas. Durante a queda, o ar oferece resistência ao movimento,
+proporcional à velocidade, com coeficiente de arrasto c = 12,5 kg/s. A
+pergunta central é: qual é a velocidade do paraquedista em cada instante de
+tempo, até o momento em que ele abre o paraquedas?
+
+## Modelagem matemática
+
+A modelagem matemática é composta basicamente por variáveis dependentes,
+variáveis independentes, parâmetros e termos forçantes.
+
+<Note label="variável dependente">
+  É aquilo que estamos tentando descobrir.
+</Note>
+
+<Note label="variável independente">
+  Seriam as dimensões, como o tempo ou o espaço.
+</Note>
+
+<Note label="parâmetros">
+  São aqueles que não mudam durante o problema — exemplo: a massa.
+</Note>
+
+<Note label="termo forçante">
+  São forças vindas de objetos externos que influenciam no problema —
+  exemplo: a força g.
+</Note>
+
+Um exemplo seria a equação F = m·a: se quisermos descobrir a aceleração,
+ela se torna a variável dependente, que sintetizando fica a = F/m, onde F
+é o termo forçante e m o parâmetro.
+
+## Equação diferencial
+
+Utilizando a fórmula a = F/m, temos que a aceleração é a derivada da
+velocidade sobre o tempo:
+
+![dv/dt = F/m](/images/problema-do-paraquedista/image1.png)
+
+A força resultante é dividida em duas: a força da gravidade (FD) e a força
+de arrasto (FU), onde FD = m·g e FU = −c·v. Substituindo na fórmula
+principal:
+
+![m dv/dt = m.g - c.v](/images/problema-do-paraquedista/image2.png)
+
+Simplificando:
+
+![dv/dt = g - (c/m)v](/images/problema-do-paraquedista/image3.png)
+
+Essa é uma equação diferencial ordinária de primeira ordem. Nela:
+
+- v é a velocidade (m/s) — a variável dependente, o que queremos descobrir
+- t é o tempo (s) — a variável independente
+- g é a aceleração da gravidade (9,8 m/s²) — o termo forçante
+- c (coeficiente de arrasto, kg/s) e m (massa, kg) são os parâmetros do sistema
+
+## Solução analítica
+
+A solução analítica é a fórmula exata do problema, obtida por meio de
+manipulações algébricas, sem nenhuma aproximação:
+
+![fórmula da solução analítica](/images/problema-do-paraquedista/image4.png)
+
+Essa fórmula permite calcular a velocidade em qualquer momento de tempo —
+basta substituir os valores das variáveis conhecidas pra ter, com exatidão,
+a velocidade. Essa é a grande importância da forma analítica. No entanto,
+muitos problemas matemáticos não conseguem resolver a equação diferencial
+por manipulação algébrica, sendo necessário utilizar o método numérico.
+
+## Solução numérica
+
+Quando não é possível obter uma fórmula fechada para a solução, utiliza-se
+desse artifício, calculando ponto a ponto em instantes discretos de tempo
+para obter-se uma maneira aproximada.
+
+### Ideia geométrica
+
+O Método de Euler parte de uma ideia simples: em vez de calcular o limite
+exato, aproximamos a derivada usando um intervalo de tempo pequeno, porém
+finito (Δt), em vez de infinitesimal:
+
+![aproximação da derivada por Δt](/images/problema-do-paraquedista/image5.png)
+
+Geometricamente, isso significa substituir a curva real (que é suave e muda
+de inclinação continuamente) por uma sequência de segmentos de reta. Em
+cada segmento, assumimos que a inclinação permanece constante e igual à
+inclinação verdadeira no ponto inicial daquele intervalo. Quanto mais a
+curva real muda de inclinação dentro daquele intervalo, maior é o
+afastamento entre a reta aproximada e a curva verdadeira — e esse
+afastamento é a fonte do erro do método.
+
+### Derivando a fórmula
+
+Substituindo o dv/dt pela própria equação diferencial do problema:
+
+![substituição de dv/dt](/images/problema-do-paraquedista/image6.png)
+
+Isolando v(ti+1), chegamos à fórmula do Método de Euler:
+
+![fórmula do método de Euler](/images/problema-do-paraquedista/image7.png)
+
+Essa é uma fórmula recursiva: para calcular a velocidade seguinte, é
+necessário saber apenas a velocidade no instante atual — por isso, pra
+cálculos em planilhas, fica bem mais fácil, já que depende apenas da última
+linha do problema para calcular a próxima. O termo (ti+1 − ti) representa o
+passo: a escolha do intervalo de tempo utilizado para decidir os instantes
+de pegar as informações do experimento.
+
+### Exemplo
+
+Partindo da condição inicial v(0) = 0, e usando um passo h = 2 segundos, os
+dois primeiros passos do cálculo são:
+
+```
+Passo 1 (t0 = 0 → t1 = 2):
+v(2) = v(0) + [g - (c/m)*v(0)] * (2 - 0)
+v(2) = 0 + [9,8 - (12,5/68,1)*0] * 2
+v(2) = 19,60 m/s
+
+Passo 2 (t1 = 2 → t2 = 4):
+v(4) = v(2) + [g - (c/m)*v(2)] * (4 - 2)
+v(4) = 19,60 + [9,8 - (12,5/68,1)*19,60] * 2
+v(4) = 32,00 m/s
+```
+
+## Comparação entre solução numérica e analítica
+
+A tabela abaixo mostra, lado a lado, os valores de velocidade obtidos pela
+solução analítica (exata) e pelo Método de Euler com passo h = 2 s, além do
+erro absoluto e do erro percentual em cada instante:
+
+| t (s) | v Analítica (m/s) | v Euler (m/s) | Erro absoluto | Erro (%) |
+| ----: | -----------------: | -------------: | -------------: | --------: |
+| 0 | 0.00 | 0.00 | 0.00 | — |
+| 2 | 16.40 | 19.60 | 3.20 | 19.48% |
+| 4 | 27.77 | 32.00 | 4.24 | 15.25% |
+| 6 | 35.64 | 39.86 | 4.21 | 11.82% |
+| 8 | 41.10 | 44.82 | 3.73 | 9.07% |
+| 10 | 44.87 | 47.97 | 3.10 | 6.90% |
+| 12 | 47.49 | 49.96 | 2.47 | 5.20% |
+| 14 | 49.30 | 51.22 | 1.92 | 3.89% |
+| 16 | 50.56 | 52.02 | 1.46 | 2.88% |
+| 18 | 51.43 | 52.52 | 1.09 | 2.12% |
+| 20 | 52.03 | 52.84 | 0.81 | 1.55% |
+| 22 | 52.45 | 53.04 | 0.59 | 1.13% |
+| 24 | 52.74 | 53.17 | 0.43 | 0.82% |
+| 26 | 52.94 | 53.25 | 0.31 | 0.59% |
+| 28 | 53.08 | 53.30 | 0.22 | 0.42% |
+
+![comparação em forma de gráfico](/images/problema-do-paraquedista/image8.png)
+
+Como podemos ver, o erro é maior no início e, conforme o tempo passa, ele
+vai diminuindo. Isso ocorre devido à inclinação no início do problema ter
+uma grande variação; ao avançar no tempo, a derivada vai se aproximando de
+0, por isso as curvas vão se juntando e entrando em igualdade.
+
+## O efeito do passo
+
+O Método de Euler assume que a inclinação da curva permanece constante
+dentro de cada intervalo de tempo. Quanto maior o intervalo, maior a chance
+de que a inclinação real mude significativamente dentro dele — e maior o
+erro introduzido. Ao diminuir h, cada intervalo passa a cobrir uma porção
+menor da curva, onde a mudança de inclinação é menor, e a reta aproximada
+se mantém mais próxima da curva verdadeira.
+
+![passo = 2](/images/problema-do-paraquedista/image9.png)
+
+Passo = 2
+
+![passo = 1,7](/images/problema-do-paraquedista/image10.png)
+
+Passo = 1,7
+
+## O contraponto
+
+Reduzir o passo tem um custo: quanto menor o h, mais pontos são necessários
+para cobrir o mesmo intervalo de tempo total, e portanto mais cálculos
+precisam ser feitos. Por exemplo, para simular 30 segundos de queda:
+
+- Com h = 2 s → são necessários 15 passos
+- Com h = 1 s → são necessários 30 passos
+- Com h = 0,5 s → são necessários 60 passos
+- Com h = 0,1 s → são necessários 300 passos
+
+Em uma planilha ou em código, esse custo extra é praticamente irrelevante
+para um problema simples como este. Mas em problemas de engenharia mais
+complexos, essa relação entre precisão e custo computacional é uma
+consideração real no momento de escolher o passo.
+
+## Implementação prática
+
+### Excel
+
+![planilha do problema do paraquedista](/images/problema-do-paraquedista/image11.png)
+
+### Python
+
+![código Python - parte 1](/images/problema-do-paraquedista/image12.png)
+
+![código Python - parte 2](/images/problema-do-paraquedista/image13.png)
+
+![código Python - parte 3](/images/problema-do-paraquedista/image14.png)
+
+![código Python - parte 4](/images/problema-do-paraquedista/image15.png)
+
+![código Python - parte 5](/images/problema-do-paraquedista/image16.png)
+
+![código Python - parte 6](/images/problema-do-paraquedista/image17.png)
